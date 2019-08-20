@@ -1,84 +1,79 @@
-# Australian Super insurance claim
+# Template document manipulation project
 
+A sample project showcasing the UiPath implementation of a hypotetical scenario: agents fill client information into template excel files. These files are either sent via email to a specified address, or they are uploaded to a sharepoint site. These files are then processed in the backoffice:
+1. the excel files are opened and relevant data is extracted
+2. Some of the fields are used to fill in a template document
+3. The document is saved as a pdf and sent via email to an email address provided in the input excel file
+
+## Purpose
+
+This template aims at providing examples of using config dictionaries, interfaces between stages to allow for interchangeable workflows adhering to interfacing convention.  
 
 ## Architecture
 
-
-![Architecture](readme/img/aus-super-ins-claim.png)
-
-![Options](readme/img/flow.png)
+![Architecture](readme/img/doc-manipulation.png)
 
 
+The project contains these distinct phases:
+1. Ingress of documents, saving them locally for further processing, using a range of options:
+    - email account
+    - sharepoint folder
+2. Extraction of data from the input files, using the folder where the files were saved as source
+3. Using the extracted data to fill in templates and save them in the local outgress folder
+4. Ougress documents using one of the possible options 
 
-The project contains the distinct phases:
-1. Ingress of documents via email
-2. Saving documents locally for processing
-3. Classification and Extraction of data from pdf files
-4. Using the extracted data for:
-    * update registry
-    * generate response email
-5. Send email 
+## Implementation scenarios
+
+### Single loop
+![Single Loop](readme/img/single-loop.png)
+
+![Multi Loop](readme/img/multi-loop.png)
 
 ## Interfacing between stages
 
+### Stages 1 - 2 
+Between stages 1 and 2, the interfacing will be achieved through a common folder where files being ingressed will be saved for further processing. Optionally, the path to the document can be added to a transactions queue on Orchestrator, for logging and monitoring purposes.
 
-### Stages 1 - 3 
-Between stages 1 and 2, as well as stages 2 and 3, the interfacing will be achieved through strings pointing to file repositories (such as SharePoint, shared drives or folders), with the the calling stage workflow passing the path to the second stage workflow
+### Stages 2 and 3
+
+Between stages 2 and 3, the data will flow using a Collection of `IDictionary <String, String>`, passing the key-value mappings of the elements needed for filling the tmplate and the generation of the output file
+
+The keys expected in the mapping are:
+* firstName
+* lastName
+* customerId
+* date
+* dob
+* address
+* accountNo
+* bsb
 
 ### Stages 3 and 4
-Between stages 3 and 4, the interface will be an IDictionary <String, String>, passing the key-value mappings of the elements needed for the generation of the output file
 
-### Stages 4 and 5
-Stage 5 requires just the path to the local document to be attached to the email. 
+Stage 4 requires just the path to the local document which is being outgressed
 
 ## Detailed implementation
 
-### Document sourcing
-The primary document source is an email folder with rules. Accessing the attachment for local processing by the robot can be performed via 2 possible routes:
-1. Use Microsoft Flow to save the attachment to Sharepoint. This can be an option if the email address is used heavily and interacting with it is very time consuming. Output of this stage: `file location in SharePoint`
-2.  The robot accesses the email folder directly and downloads the attachments to a local/shared drive. Output of this stage: `file location on shared/local drive`. 
-*If first and second stages are ran on different machines, attention should be paid to the location of the file and ensure that all robots have access to it*
+### Document ingress
 
-### Downloading documents for processing
-The document is copied locally into a `tmp` folder. Output of this stage: `file name in tmp folder`
+The primary document source can be one of multiple options, such as an email folder or a sharepoint folder. The document will be downloaded for processing, to a local folder. Downloading the file can take place via these means:
+1. Save the the file from the Sharepoint location provided as an argument.
+2. The robot accesses the email folder directly and downloads the attachments to a local/shared drive.  
+*If these ingress routes can be run on on different machines, attention should be paid to the location of the file and ensure that all robots have access to it*
 
-### Classification and extraction
+The document is copied locally into a temporary folder, to be processed. Output of this stage (which is optional): `file name in tmp folder`
 
-The pdf document needs to go through 3 stages before it can be presented to the next stage:
-1. Loading
-2. Classification
-3. Extraction
+### Data extraction and manipulation
 
-#### Loading
-The document is loaded using the `Read pdf` activity. The workflow is straight forward, only point of attention is around the exceptions which are thrown:
-1. If the location is not reacheable
-2. If the file does not exist at the location
-3. If the file is of an invalid format (_ie_ not a pdf file)
+In this stage, the data is extracted from the ingress `.xlsx` file. The format of the file is considered known, a template filled by the sender.
 
-It assumed the pdf file is digital, not a scanned one. The reading of the text is done natively.
+Data validation is performed in this stage, validating inputs such as account and BSB formats
 
-#### Classification
-The classification stage is performed using `RegEx`. The mapping of the regular expressions to actual suppliers is located in `src\assets\classify.csv`
-In this mapping, the keys are the name of the processes the documents will start. 
-The output of the classification process is an augmented pdf text which will be passed to the next stage.
+The document is protected with a password. The documents contained in the assets folders of the project have the password `password`
 
-#### Extraction
-The classified text is received from the previous stage. Based on the clasification, a lookup is performed to find the set of regular expressions which will be used to extract the information from the text. 
-The mapping of the process name to the file containing regular expressions is  `processKey` -> `src\assets\extract-processKey.csv`
+### Data usage for filling in the template document 
 
-The extraction workflow throws an exception if the document was wrongly classified; _ie_ if the regular expressions return a number of Matches which is different than 1, either no match or 2 or more matches
+Data is received in the key-value mapping and is used for filling in the required fields in the outgress/template document. The `.docx` document is first filled and then printed as a pdf file, ready to be sent to its destination. The processed documents are moved from the `processing` folder to its final destination folder `processed`
 
-### Update registry and generate response document
-
-#### Interfacing
-
-The input into this stage is a key-value mapping (the implementation specific data structure used is a .NET `IDictionary<String,String>`)
-The keys expected in the mapping are:
-* memberName
-* memberNumber
-* dateSigned
-* 28dayLetter
-* signedOff
-
-### Send email
-The document generated at the previous stage is attached to an email and sent. the generated document is moved to the `processed` folder.
+### Outcome and document outgress
+The document generated at the previous stage is attached to an email and sent. The document is then moved to the `sent` folder.
