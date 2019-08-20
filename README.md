@@ -27,7 +27,12 @@ The project contains these distinct phases:
 ### Single loop
 ![Single Loop](readme/img/single-loop.png)
 
+The single loop approach creates a single loop, which takes the attachments from the ingress email, downloads them, processes and then outgresses the outcome
+
+### Multiple loops
 ![Multi Loop](readme/img/multi-loop.png)
+
+The multiple loops approach creates loops for each of the stages and performs the actions for all the transactions before moving to the next stage 
 
 ## Interfacing between stages
 
