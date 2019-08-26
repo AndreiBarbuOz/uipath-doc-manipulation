@@ -1,26 +1,43 @@
 # Template document manipulation project
 
-A sample project showcasing the UiPath implementation of a hypothetical scenario: agents fill client information into template excel files. These files are either sent via email to a specified address, or they are uploaded to a sharepoint site. These files are then processed in the backoffice:
-1. the excel files are opened and relevant data is extracted
-2. Some of the fields are used to fill in a template document
-3. The document is saved as a pdf and sent via email to an email address provided in the input excel file
-
 ## Purpose
 
-This template aims at providing examples of using config dictionaries, interfaces between stages to allow for interchangeable workflows adhering to interfacing convention.  
+This template provides a template of UiPath workflows, creating a framework for a common scenario. The purposes of the project are to:
+1. Break down the process into stages with clear interfaces between them (ingress, classify-extract, process, outgress)
+2. Showcase multiple ways of processing the same item (single loop, multiple loops, ReFramework, ReFramework light with Excel input)
+3. Provide examples of multiple interchangeable workflows implementing the same stage (ingress via Email, or Sharepoint, or Google docs), all of them adhering to the same interface convention
+4. Exemplify complex data structures which allow for easily extensible implementations (dictionaries, collections, tuples)
+5. Implement an example of good practices, limiting the number of arguments, commenting the code, handling exceptions
+
+## Scenario
+A sample project showcasing the UiPath implementation of a common scenario: 
+1. Agents fill client information into template excel files and post these files using one of a few possible ways (email to a specified address, sharepoint, google docs)
+2. The files are downloaded locally for classification, data extraction and processing
+3. The excel files are opened and relevant data is extracted
+4. Some of the fields are used to fill in a template document
+5. The document is saved as a pdf and sent via email to an email address provided in the input excel file
 
 ## Architecture
 
 ![Architecture](readme/img/doc-manipulation.png)
 
 
-The project contains these distinct phases:
+The project contains four distinct phases:
 1. Ingress of documents, saving them locally for further processing, using a range of options:
     - email account
     - sharepoint folder
 2. Extraction of data from the input files, using the folder where the files were saved as source
 3. Using the extracted data to fill in templates and save them in the local outgress folder
 4. Ougress documents using one of the possible options 
+
+## Installation and configuration
+
+Clone the repository and update the config file to be used. Depending on the ingress and outgress being used, different keys need to be present:
+|Option|Ingress|Ougress|
+|--|--|--|
+|*Email*|outlook_account, ingress_outlook_folder, send_email_address|outlook_account, processed_outlook_folder, send_email_address|
+|*Sharepoint*|sharepoint_site, sharepoint_credential|sharepoint_site, sharepoint_credential|
+|
 
 ## Implementation scenarios
 
