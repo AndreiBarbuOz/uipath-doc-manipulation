@@ -37,7 +37,7 @@ Clone the repository and update the config file to be used. Depending on the ing
 |--|--|--|
 |*Email*|outlook_account, ingress_outlook_folder, send_email_address|outlook_account, processed_outlook_folder, send_email_address|
 |*Sharepoint*|sharepoint_site, sharepoint_credential|sharepoint_site, sharepoint_credential|
-|
+
 
 ## Implementation scenarios
 
