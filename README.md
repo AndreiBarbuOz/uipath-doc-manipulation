@@ -33,8 +33,9 @@ The project contains four distinct phases:
 ## Installation and configuration
 
 Clone the repository and update the config file to be used. Depending on the ingress and outgress being used, different keys need to be present:
+
 |Option|Ingress|Ougress|
-|--|--|--|
+|---|---|---|
 |*Email*|outlook_account, ingress_outlook_folder, send_email_address|outlook_account, processed_outlook_folder, send_email_address|
 |*Sharepoint*|sharepoint_site, sharepoint_credential|sharepoint_site, sharepoint_credential|
 
