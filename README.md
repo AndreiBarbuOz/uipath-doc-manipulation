@@ -1,6 +1,6 @@
 # Template document manipulation project
 
-A sample project showcasing the UiPath implementation of a hypotetical scenario: agents fill client information into template excel files. These files are either sent via email to a specified address, or they are uploaded to a sharepoint site. These files are then processed in the backoffice:
+A sample project showcasing the UiPath implementation of a hypothetical scenario: agents fill client information into template excel files. These files are either sent via email to a specified address, or they are uploaded to a sharepoint site. These files are then processed in the backoffice:
 1. the excel files are opened and relevant data is extracted
 2. Some of the fields are used to fill in a template document
 3. The document is saved as a pdf and sent via email to an email address provided in the input excel file
@@ -41,7 +41,7 @@ Between stages 1 and 2, the interfacing will be achieved through a common folder
 
 ### Stages 2 and 3
 
-Between stages 2 and 3, the data will flow using a Collection of `IDictionary <String, String>`, passing the key-value mappings of the elements needed for filling the tmplate and the generation of the output file
+Between stages 2 and 3, the data will flow using a Collection of `IDictionary <String, String>`, passing the key-value mappings of the elements needed for filling the template and the generation of the output file
 
 The keys expected in the mapping are:
 * firstName
