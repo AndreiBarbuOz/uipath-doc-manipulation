@@ -19,16 +19,19 @@ A sample project showcasing the UiPath implementation of a common scenario:
 
 ## Architecture
 
-![Architecture](readme/img/doc-manipulation.png)
+![Architecture](https://www.lucidchart.com/publicSegments/view/76e2eb65-d3f9-414b-a2ee-49053600a1aa/image.png)
 
 
 The project contains four distinct phases:
-1. Ingress of documents, saving them locally for further processing, using a range of options:
+1. Ingress of documents, saving them locally for further processing. There are currently two options for this:
     - email account
     - sharepoint folder
 2. Extraction of data from the input files, using the folder where the files were saved as source
 3. Using the extracted data to fill in templates and save them in the local outgress folder
-4. Ougress documents using one of the possible options 
+4. Ougress documents using one of the possible options:
+    - email account
+    - sharepoint folder
+
 
 ## Installation and configuration
 
@@ -36,21 +39,24 @@ Clone the repository and update the config file to be used. Depending on the ing
 
 |Option|Ingress|Ougress|
 |---|---|---|
-|*Email*|outlook_account, ingress_outlook_folder, send_email_address|outlook_account, processed_outlook_folder, send_email_address|
-|*Sharepoint*|sharepoint_site, sharepoint_credential|sharepoint_site, sharepoint_credential|
+|**Email**|outlook_account, ingress_outlook_folder, send_email_address|outlook_account, processed_outlook_folder, send_email_address|
+|**Sharepoint**|sharepoint_site, sharepoint_credential|sharepoint_site, sharepoint_credential|
 
 
 ## Implementation scenarios
 
 ### Single loop
-![Single Loop](readme/img/single-loop.png)
+![Single Loop](https://www.lucidchart.com/publicSegments/view/546caffb-a502-4a5f-a9eb-f94693813805/image.png)
 
 The single loop approach creates a single loop, which takes the attachments from the ingress email, downloads them, processes and then outgresses the outcome
 
 ### Multiple loops
-![Multi Loop](readme/img/multi-loop.png)
+![Multi Loop](https://www.lucidchart.com/publicSegments/view/ed3d773c-e6b6-4b62-9e2b-b35c79425f6b/image.png)
 
 The multiple loops approach creates loops for each of the stages and performs the actions for all the transactions before moving to the next stage 
+
+### REFramework
+The RE Framework uses a single loop approach with an added layer of exception handling and transaction queueing.
 
 ## Interfacing between stages
 
@@ -100,3 +106,8 @@ Data is received in the key-value mapping and is used for filling in the require
 
 ### Outcome and document outgress
 The document generated at the previous stage is attached to an email and sent. The document is then moved to the `sent` folder.
+
+
+## Testing and development
+
+For most of the files in the `process\src` folder, an equivalent test file exists in the `process\tests` folder. 

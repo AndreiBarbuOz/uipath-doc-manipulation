@@ -7,7 +7,7 @@
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>564.8,2014.4</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>624.666666666667,1617.33333333333</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -58,10 +58,9 @@
       <AssemblyReference>UiPath.Word</AssemblyReference>
       <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
       <AssemblyReference>System.ValueTuple</AssemblyReference>
-      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Create document based on template found in assets and input dictionary&#xA;1. Verify the keys in the dictionary&#xA;2. Create copy of template in tmp folder&#xA;3. Populate template with values&#xA;&#xA;Arguments:&#xA;in_dictContent (In): a dictionary containing the required values to be inserted in the template docx file&#xA;&#xA;Throws:&#xA;ArgumentException (KeysMissing): if keys are missing from the dictionary&#xA;ArgumentException (InvalidDictionary): if the dictionary is null&#xA;&#xA;Assumptions: &#xA;template document is found in assets folder" DisplayName="update_doc" sap:VirtualizedContainerService.HintSize="524.8,1894.4" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence sap2010:Annotation.AnnotationText="Create document based on template found in assets and input dictionary&#xA;1. Verify the keys in the dictionary&#xA;2. Create copy of template in tmp folder&#xA;3. Populate template with values&#xA;&#xA;Arguments:&#xA;in_dictContent (In): a dictionary containing the required values to be inserted in the template docx file&#xA;&#xA;Throws:&#xA;ArgumentException (KeysMissing): if keys are missing from the dictionary&#xA;ArgumentException (InvalidDictionary): if the dictionary is null&#xA;&#xA;Assumptions: &#xA;template document is found in assets folder" DisplayName="update_doc" sap:VirtualizedContainerService.HintSize="604.666666666667,1557.33333333333" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="x:String" Name="str_filePath" />
     </Sequence.Variables>
@@ -71,33 +70,33 @@
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <If Condition="[in_dictContent is nothing]" sap:VirtualizedContainerService.HintSize="502.4,209.6" sap2010:WorkflowViewState.IdRef="If_2">
+    <If Condition="[in_dictContent is nothing]" sap:VirtualizedContainerService.HintSize="562.666666666667,214" sap2010:WorkflowViewState.IdRef="If_2">
       <If.Then>
-        <Throw Exception="[new ArgumentException(&quot;InvalidDictionary&quot;)]" sap:VirtualizedContainerService.HintSize="200,22.4" sap2010:WorkflowViewState.IdRef="Throw_2" />
+        <Throw Exception="[new ArgumentException(&quot;InvalidDictionary&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_2" />
       </If.Then>
     </If>
-    <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="502.4,468.8" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[{&quot;firstName&quot;, &quot;lastName&quot;, &quot;dob&quot;, &quot;custId&quot;, &quot;address&quot;, &quot;account&quot;, &quot;bsb&quot;}]">
+    <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="562.666666666667,444.666666666667" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[{&quot;firstName&quot;, &quot;lastName&quot;, &quot;dob&quot;, &quot;custId&quot;, &quot;address&quot;, &quot;account&quot;, &quot;bsb&quot;}]">
       <ui:ForEach.Body>
         <ActivityAction x:TypeArguments="x:String">
           <ActivityAction.Argument>
             <DelegateInArgument x:TypeArguments="x:String" Name="item" />
           </ActivityAction.Argument>
-          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="486.4,334.4" sap2010:WorkflowViewState.IdRef="Sequence_3">
+          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="526,306" sap2010:WorkflowViewState.IdRef="Sequence_3">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <If Condition="[in_dictContent.ContainsKey(item)]" sap:VirtualizedContainerService.HintSize="464,209.6" sap2010:WorkflowViewState.IdRef="If_1">
+            <If Condition="[in_dictContent.ContainsKey(item)]" sap:VirtualizedContainerService.HintSize="484,214" sap2010:WorkflowViewState.IdRef="If_1">
               <If.Else>
-                <Throw Exception="[new ArgumentException(&quot;KeysMissing&quot;)]" sap:VirtualizedContainerService.HintSize="200,22.4" sap2010:WorkflowViewState.IdRef="Throw_1" />
+                <Throw Exception="[new ArgumentException(&quot;KeysMissing&quot;)]" sap:VirtualizedContainerService.HintSize="200,22" sap2010:WorkflowViewState.IdRef="Throw_1" />
               </If.Else>
             </If>
           </Sequence>
         </ActivityAction>
       </ui:ForEach.Body>
     </ui:ForEach>
-    <Assign sap:VirtualizedContainerService.HintSize="502.4,60" sap2010:WorkflowViewState.IdRef="Assign_1">
+    <Assign sap:VirtualizedContainerService.HintSize="562.666666666667,62" sap2010:WorkflowViewState.IdRef="Assign_1">
       <Assign.To>
         <OutArgument x:TypeArguments="x:String">[str_filePath]</OutArgument>
       </Assign.To>
@@ -105,25 +104,20 @@
         <InArgument x:TypeArguments="x:String">[in_strDocOutputPath + "\" + system.Guid.NewGuid.ToString + in_dictContent("firstName") + " " + in_dictContent("lastName") + ".docx"]</InArgument>
       </Assign.Value>
     </Assign>
-    <If Condition="[not System.IO.Directory.Exists(in_strDocOutputPath)]" sap:VirtualizedContainerService.HintSize="502.4,209.6" sap2010:WorkflowViewState.IdRef="If_3">
-      <If.Then>
-        <ui:CreateDirectory ContinueOnError="{x:Null}" DisplayName="Create Directory" sap:VirtualizedContainerService.HintSize="200,22.4" sap2010:WorkflowViewState.IdRef="CreateDirectory_1" Path="[in_strDocOutputPath]" />
-      </If.Then>
-    </If>
-    <ui:CopyFile ContinueOnError="{x:Null}" Destination="[str_filePath]" DisplayName="Copy File" sap:VirtualizedContainerService.HintSize="502.4,22.4" sap2010:WorkflowViewState.IdRef="CopyFile_1" Overwrite="False" Path="[in_strTemplatePath]" />
-    <ui:ForEach x:TypeArguments="scg:KeyValuePair(x:String, x:String)" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="502.4,347.2" sap2010:WorkflowViewState.IdRef="ForEach`1_5" Values="[in_dictContent]">
+    <ui:CopyFile ContinueOnError="{x:Null}" Destination="[str_filePath]" DisplayName="Copy File" sap:VirtualizedContainerService.HintSize="562.666666666667,22" sap2010:WorkflowViewState.IdRef="CopyFile_1" Overwrite="False" Path="[in_strTemplatePath]" />
+    <ui:ForEach x:TypeArguments="scg:KeyValuePair(x:String, x:String)" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="562.666666666667,317.333333333333" sap2010:WorkflowViewState.IdRef="ForEach`1_5" Values="[in_dictContent]">
       <ui:ForEach.Body>
         <ActivityAction x:TypeArguments="scg:KeyValuePair(x:String, x:String)">
           <ActivityAction.Argument>
             <DelegateInArgument x:TypeArguments="scg:KeyValuePair(x:String, x:String)" Name="item" />
           </ActivityAction.Argument>
-          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="336.8,212.8" sap2010:WorkflowViewState.IdRef="Sequence_6">
+          <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="376,178.666666666667" sap2010:WorkflowViewState.IdRef="Sequence_6">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
-            <p:DocumentReplaceText Found="{x:Null}" DisplayName="Replace Text" FilePath="[str_filePath]" sap:VirtualizedContainerService.HintSize="314.4,88" sap2010:WorkflowViewState.IdRef="DocumentReplaceText_1" Replace="[item.Value]" Search="[&quot;&lt;&lt;&quot; + item.Key + &quot;&gt;&gt;&quot;]" />
+            <p:DocumentReplaceText Found="{x:Null}" DisplayName="Replace Text" FilePath="[str_filePath]" sap:VirtualizedContainerService.HintSize="334,86.6666666666667" sap2010:WorkflowViewState.IdRef="DocumentReplaceText_1" Replace="[item.Value]" Search="[&quot;&lt;&lt;&quot; + item.Key + &quot;&gt;&gt;&quot;]" />
           </Sequence>
         </ActivityAction>
       </ui:ForEach.Body>

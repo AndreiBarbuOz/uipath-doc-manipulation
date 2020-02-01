@@ -5,7 +5,7 @@
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>526.4,872.8</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>546,748</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -56,10 +56,9 @@
       <AssemblyReference>UiPath.Word</AssemblyReference>
       <AssemblyReference>System.ValueTuple</AssemblyReference>
       <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
-      <AssemblyReference>System.Runtime.WindowsRuntime</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="ingress-all" sap:VirtualizedContainerService.HintSize="486.4,752.8" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="ingress-all" sap:VirtualizedContainerService.HintSize="526,688" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="snm:MailMessage" Name="mail_crtValue" />
       <Variable x:TypeArguments="scg:IEnumerable(x:String)" Name="enum_crtAttachments" />
@@ -69,7 +68,7 @@
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke email-ingress workflow" sap:VirtualizedContainerService.HintSize="464,88" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="dataflow\src\email-ingress.xaml">
+    <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke email-ingress workflow" sap:VirtualizedContainerService.HintSize="484,86.6666666666667" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_2" UnSafe="False" WorkflowFileName="process\src\email-ingress.xaml">
       <ui:InvokeWorkflowFile.Arguments>
         <InArgument x:TypeArguments="x:String" x:Key="in_strAccount">[CStr(in_dictConfig("outlook_account"))]</InArgument>
         <InArgument x:TypeArguments="x:String" x:Key="in_strEmailFolder">[CStr(in_dictConfig("ingress_outlook_folder"))]</InArgument>
@@ -78,15 +77,15 @@
         <OutArgument x:TypeArguments="scg:IEnumerable(x:String)" x:Key="out_attachements">[enum_crtAttachments]</OutArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <While sap:VirtualizedContainerService.HintSize="464,500" sap2010:WorkflowViewState.IdRef="While_1" Condition="[mail_crtValue isnot nothing]">
-      <Sequence sap:VirtualizedContainerService.HintSize="336.8,340.8" sap2010:WorkflowViewState.IdRef="Sequence_2">
+    <While sap:VirtualizedContainerService.HintSize="484,469.333333333333" sap2010:WorkflowViewState.IdRef="While_1" Condition="[mail_crtValue isnot nothing]">
+      <Sequence sap:VirtualizedContainerService.HintSize="376,305.333333333333" sap2010:WorkflowViewState.IdRef="Sequence_2">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
-        <ui:MoveOutlookMessage Account="{x:Null}" DisplayName="Move Outlook Mail Message" sap:VirtualizedContainerService.HintSize="314.4,88" sap2010:WorkflowViewState.IdRef="MoveOutlookMessage_1" MailFolder="[CStr(in_dictConfig(&quot;processed_outlook_folder&quot;))]" MailMessage="[mail_crtValue]" />
-        <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke email-ingress workflow" sap:VirtualizedContainerService.HintSize="314.4,88" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="dataflow\src\email-ingress.xaml">
+        <ui:MoveOutlookMessage Account="{x:Null}" DisplayName="Move Outlook Mail Message" sap:VirtualizedContainerService.HintSize="334,86.6666666666667" sap2010:WorkflowViewState.IdRef="MoveOutlookMessage_1" MailFolder="[CStr(in_dictConfig(&quot;processed_outlook_folder&quot;))]" MailMessage="[mail_crtValue]" />
+        <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke email-ingress workflow" sap:VirtualizedContainerService.HintSize="334,86.6666666666667" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_1" UnSafe="False" WorkflowFileName="process\src\email-ingress.xaml">
           <ui:InvokeWorkflowFile.Arguments>
             <InArgument x:TypeArguments="x:String" x:Key="in_strAccount">[CStr(in_dictConfig("outlook_account"))]</InArgument>
             <InArgument x:TypeArguments="x:String" x:Key="in_strEmailFolder">[CStr(in_dictConfig("ingress_outlook_folder"))]</InArgument>
