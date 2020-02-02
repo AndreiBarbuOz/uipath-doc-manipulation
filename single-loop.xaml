@@ -1,4 +1,4 @@
-<Activity mc:Ignorable="sap sap2010" x:Class="single_loop" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="668,2143.33333333333" sap2010:WorkflowViewState.IdRef="single_loop_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:snm="clr-namespace:System.Net.Mail;assembly=System" xmlns:ss="clr-namespace:System.Security;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+<Activity mc:Ignorable="sap sap2010" x:Class="single_loop" mva:VisualBasic.Settings="{x:Null}" sap:VirtualizedContainerService.HintSize="668,2146.66666666667" sap2010:WorkflowViewState.IdRef="single_loop_1" xmlns="http://schemas.microsoft.com/netfx/2009/xaml/activities" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:mva="clr-namespace:Microsoft.VisualBasic.Activities;assembly=System.Activities" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:sap="http://schemas.microsoft.com/netfx/2009/xaml/activities/presentation" xmlns:sap2010="http://schemas.microsoft.com/netfx/2010/xaml/activities/presentation" xmlns:scg="clr-namespace:System.Collections.Generic;assembly=mscorlib" xmlns:snm="clr-namespace:System.Net.Mail;assembly=System" xmlns:ss="clr-namespace:System.Security;assembly=mscorlib" xmlns:ui="http://schemas.uipath.com/workflow/activities" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
   <TextExpression.NamespacesForImplementation>
     <scg:List x:TypeArguments="x:String" Capacity="22">
       <x:String>System.Activities</x:String>
@@ -45,7 +45,7 @@
       <AssemblyReference>UiPath.UiAutomation.Activities</AssemblyReference>
     </scg:List>
   </TextExpression.ReferencesForImplementation>
-  <Sequence DisplayName="single_loop" sap:VirtualizedContainerService.HintSize="648,2083.33333333333" sap2010:WorkflowViewState.IdRef="Sequence_1">
+  <Sequence DisplayName="single_loop" sap:VirtualizedContainerService.HintSize="648,2086.66666666667" sap2010:WorkflowViewState.IdRef="Sequence_1">
     <Sequence.Variables>
       <Variable x:TypeArguments="scg:IDictionary(x:String, x:Object)" Name="dict_Config" />
       <Variable x:TypeArguments="ss:SecureString" Name="sstr_excelPassword" />
@@ -101,24 +101,15 @@
         <OutArgument x:TypeArguments="scg:IEnumerable(x:String)" x:Key="out_attachements">[enum_crtAttachments]</OutArgument>
       </ui:InvokeWorkflowFile.Arguments>
     </ui:InvokeWorkflowFile>
-    <While sap:VirtualizedContainerService.HintSize="606,1484.66666666667" sap2010:WorkflowViewState.IdRef="While_1" Condition="[mail_crtValue isnot nothing]">
-      <Sequence sap:VirtualizedContainerService.HintSize="559.333333333333,1320.66666666667" sap2010:WorkflowViewState.IdRef="Sequence_2">
+    <While sap:VirtualizedContainerService.HintSize="606,1488" sap2010:WorkflowViewState.IdRef="While_1" Condition="[mail_crtValue isnot nothing]">
+      <Sequence sap:VirtualizedContainerService.HintSize="559.333333333333,1324" sap2010:WorkflowViewState.IdRef="Sequence_2">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
         <ui:MoveOutlookMessage Account="{x:Null}" DisplayName="Move Outlook Mail Message" sap:VirtualizedContainerService.HintSize="517.333333333333,86.6666666666667" sap2010:WorkflowViewState.IdRef="MoveOutlookMessage_1" MailFolder="[CStr(dict_Config(&quot;processed_outlook_folder&quot;))]" MailMessage="[mail_crtValue]" />
-        <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke email-ingress workflow" sap:VirtualizedContainerService.HintSize="517.333333333333,86.6666666666667" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" UnSafe="False" WorkflowFileName="process\src\email-ingress.xaml">
-          <ui:InvokeWorkflowFile.Arguments>
-            <InArgument x:TypeArguments="x:String" x:Key="in_strAccount">[CStr(dict_Config("outlook_account"))]</InArgument>
-            <InArgument x:TypeArguments="x:String" x:Key="in_strEmailFolder">[CStr(dict_Config("ingress_outlook_folder"))]</InArgument>
-            <InArgument x:TypeArguments="x:String" x:Key="in_strDownloadFolder">[CStr(dict_Config("to_process_folder"))]</InArgument>
-            <OutArgument x:TypeArguments="snm:MailMessage" x:Key="out_email">[mail_crtValue]</OutArgument>
-            <OutArgument x:TypeArguments="scg:IEnumerable(x:String)" x:Key="out_attachements">[enum_crtAttachments]</OutArgument>
-          </ui:InvokeWorkflowFile.Arguments>
-        </ui:InvokeWorkflowFile>
-        <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="517.333333333333,975.333333333333" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[enum_crtAttachments]">
+        <ui:ForEach x:TypeArguments="x:String" CurrentIndex="{x:Null}" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="517.333333333333,978.666666666667" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[enum_crtAttachments]">
           <ui:ForEach.Body>
             <ActivityAction x:TypeArguments="x:String">
               <ActivityAction.Argument>
@@ -187,6 +178,15 @@
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
         </ui:ForEach>
+        <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Invoke email-ingress workflow" sap:VirtualizedContainerService.HintSize="517.333333333333,86.6666666666667" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_5" UnSafe="False" WorkflowFileName="process\src\email-ingress.xaml">
+          <ui:InvokeWorkflowFile.Arguments>
+            <InArgument x:TypeArguments="x:String" x:Key="in_strAccount">[CStr(dict_Config("outlook_account"))]</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="in_strEmailFolder">[CStr(dict_Config("ingress_outlook_folder"))]</InArgument>
+            <InArgument x:TypeArguments="x:String" x:Key="in_strDownloadFolder">[CStr(dict_Config("to_process_folder"))]</InArgument>
+            <OutArgument x:TypeArguments="snm:MailMessage" x:Key="out_email">[mail_crtValue]</OutArgument>
+            <OutArgument x:TypeArguments="scg:IEnumerable(x:String)" x:Key="out_attachements">[enum_crtAttachments]</OutArgument>
+          </ui:InvokeWorkflowFile.Arguments>
+        </ui:InvokeWorkflowFile>
       </Sequence>
     </While>
   </Sequence>
