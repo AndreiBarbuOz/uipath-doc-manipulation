@@ -140,7 +140,7 @@
                       <av:PointCollection x:Key="ConnectorLocation">300,506.333333333333 300,574.333333333333</av:PointCollection>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
-                  <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Email ingress all" sap:VirtualizedContainerService.HintSize="200,52.6666666666667" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_17" UnSafe="False" WorkflowFileName="process/src/ingress-all.xaml">
+                  <ui:InvokeWorkflowFile ContinueOnError="{x:Null}" DisplayName="Email ingress all" sap:VirtualizedContainerService.HintSize="200,52.6666666666667" sap2010:WorkflowViewState.IdRef="InvokeWorkflowFile_17" UnSafe="False" WorkflowFileName="process/src/email-ingress-all.xaml">
                     <ui:InvokeWorkflowFile.Arguments>
                       <InArgument x:TypeArguments="scg:IDictionary(x:String, x:Object)" x:Key="in_dictConfig">[dict_Config]</InArgument>
                     </ui:InvokeWorkflowFile.Arguments>

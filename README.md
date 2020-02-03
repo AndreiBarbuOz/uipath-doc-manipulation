@@ -23,14 +23,10 @@ A sample project showcasing the UiPath implementation of a common scenario:
 
 
 The project contains four distinct phases:
-1. Ingress of documents, saving them locally for further processing. There are currently two options for this:
-    - email account
-    - sharepoint folder
+1. Ingress of documents, saving them locally for further processing. Currently, only email is implemented
 2. Extraction of data from the input files, using the folder where the files were saved as source
 3. Using the extracted data to fill in templates and save them in the local outgress folder
-4. Ougress documents using one of the possible options:
-    - email account
-    - sharepoint folder
+4. Ougress documents using one possible option. Currently, only email has been implemented
 
 
 ## Installation and configuration
@@ -40,7 +36,6 @@ Clone the repository and update the config file to be used. Depending on the ing
 |Option|Ingress|Ougress|
 |---|---|---|
 |**Email**|outlook_account, ingress_outlook_folder, send_email_address|outlook_account, processed_outlook_folder, send_email_address|
-|**Sharepoint**|sharepoint_site, sharepoint_credential|sharepoint_site, sharepoint_credential|
 
 
 ## Implementation scenarios
@@ -110,4 +105,5 @@ The document generated at the previous stage is attached to an email and sent. T
 
 ## Testing and development
 
-For most of the files in the `process\src` folder, an equivalent test file exists in the `process\tests` folder. 
+For most of the files in the `process\src` folder, an equivalent test file exists in the `process\tests` folder. The functionality of the workflow is embedded in the tests. _ie._ the successful execution of the tests define the correct behavior of the workflow.
+
