@@ -16,7 +16,7 @@ jobs:
     - script: dir /s
     - powershell: |
         Import-Module UiPath.PowerShell
-        $token = Get-UiPathAuthToken -URL $(orchUrl) -Username username -Password password -TenantName tenantName
+        $token = Get-UiPathAuthToken -URL $(orchUrl) -Username $(username) -Password $(password) -TenantName $(tenantName)
 #        $project = Get-Content .\MockProcess\project.json | Out-String | ConvertFrom-Json
 #        Get-ChildItem -Path . -Filter *.nupkg | ForEach-Object {Add-UiPathPackage -PackageFile $_.FullName -AuthToken $token}
 #        $package = Get-UiPathPackage -id $project.name -AuthToken $token
