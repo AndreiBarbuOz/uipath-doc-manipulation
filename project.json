@@ -1,7 +1,7 @@
 {
   "name": "doc-manipulation",
   "description": "Sample document manipulation project, showcasing csv, excel, docx and email integration, data flows and complex data structures",
-  "main": "REFramework.xaml",
+  "main": "ref.xaml",
   "dependencies": {
     "Microsoft.Activities": "1.0.1",
     "Microsoft.Activities.Extensions": "2.0.6.9",
