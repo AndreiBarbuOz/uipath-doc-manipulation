@@ -1,0 +1,16 @@
+variables:
+- group: uipath-cicd
+
+trigger:
+- master
+
+jobs:
+  - job: build_and_upload
+    pool:
+      vmImage: 'windows-latest'
+    container:
+      image: $(containerRegistry).azurecr.io/$(repositoryName):latest
+      endpoint: demovmcontainer
+    steps:
+    - script: dir /s
+      displayName: 'Run a one-line script'
