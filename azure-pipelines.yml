@@ -12,8 +12,12 @@ jobs:
       image: $(containerRegistry).azurecr.io/$(repositoryName):latest
       endpoint: demovmcontainer
     steps:
-    - script: c:\UiPath\Robot\UiRobot.exe -pack $(Build.SourcesDirectory)\project.json -o .
-    - script: dir /s
+    - script: c:\UiPath\Robot\UiRobot.exe -pack $(Build.SourcesDirectory)\project.json -o $(Build.ArtifactStagingDirectory)\
+    - script: |
+        cd
+        dir
+        cd $(Build.ArtifactStagingDirectory)
+        dir
     - powershell: |
         Import-Module UiPath.PowerShell
         $token = Get-UiPathAuthToken -URL $(orchUrl) -Username $(username) -Password $(password) -TenantName $(tenantName)
