@@ -13,19 +13,14 @@ jobs:
       endpoint: demovmcontainer
     steps:
     - script: c:\UiPath\Robot\UiRobot.exe -pack $(Build.SourcesDirectory)\project.json -o $(Build.ArtifactStagingDirectory)\
-    - script: |
-        cd
-        dir
-        cd $(Build.ArtifactStagingDirectory)
-        dir
     - powershell: |
         Import-Module UiPath.PowerShell
         Get-UiPathAuthToken -URL $(orchUrl) -Username $(username) -Password $(password) -TenantName $(tenantName) -Session
-        Get-UiPathRobot | Format-Table    
-#        $project = Get-Content .\MockProcess\project.json | Out-String | ConvertFrom-Json
-#        Get-ChildItem -Path . -Filter *.nupkg | ForEach-Object {Add-UiPathPackage -PackageFile $_.FullName -AuthToken $token}
-#        $package = Get-UiPathPackage -id $project.name -AuthToken $token
-#        $testEnv = Get-UiPathEnvironment -name UnitTesting -AuthToken $token
-#        $process = Add-UiPathProcess -Name ("UnitTest-" + $package.Id) -Environment $testEnv -Package $package -AuthToken $token
-#        Start-UiPathJob -RobotCount 1 -Process $process -AuthToken $token
-#      displayName: 'Run a one-line script'
+        Get-ChildItem -Path $(Build.ArtifactStagingDirectory) -Filter *.nupkg | ForEach-Object {Add-UiPathPackage -PackageFile $_.FullName}
+        $package = Get-UiPathPackage -id $project.name 
+
+        Get-UiPathRobot | Format-Table
+        Get-UiPathProcess | Format-Table
+        Get-UiPathPackage | Format-Table
+        Get-UiPathPackageVersion -Package $package | Format-Table
+      displayName: 'Build package'

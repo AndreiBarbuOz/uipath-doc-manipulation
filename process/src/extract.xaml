@@ -7,7 +7,7 @@
   <mva:VisualBasic.Settings>
     <x:Null />
   </mva:VisualBasic.Settings>
-  <sap:VirtualizedContainerService.HintSize>574,2860.66666666667</sap:VirtualizedContainerService.HintSize>
+  <sap:VirtualizedContainerService.HintSize>574.666666666667,2845.33333333333</sap:VirtualizedContainerService.HintSize>
   <sap2010:WorkflowViewState.IdRef>ActivityBuilder_1</sap2010:WorkflowViewState.IdRef>
   <TextExpression.NamespacesForImplementation>
     <sco:Collection x:TypeArguments="x:String">
@@ -63,23 +63,23 @@
       <AssemblyReference>System.ComponentModel.Composition</AssemblyReference>
     </sco:Collection>
   </TextExpression.ReferencesForImplementation>
-  <Sequence sap2010:Annotation.AnnotationText="Extract the information from an incoming .xlsx file containing a predefined template, filled in by the sender&#xA;&#xA;Assumptions:&#xA;The file is accessible and the format is the expected one&#xA;&#xA;Arguments: &#xA;in_strFilePath (In): String containing the file path&#xA;out_dictData (out): IDictionary &lt;String, String&gt; containing the extacted data from the file&#xA;in_sstrPassword (In): Secure String containing the file password&#xA;&#xA;Throws:&#xA;ArgumentException(InvalidFileFormat): if the excel file is in an unrecognized format&#xA;ArgumentException(FileNotFound): if the file is not in the expected location&#xA;ArgumentException(InvalidPassword): if the supplied password is not correct&#xA;&#xA;Outcome:&#xA;Success: the data is " DisplayName="extract" sap:VirtualizedContainerService.HintSize="554,2800.66666666667" sap2010:WorkflowViewState.IdRef="Sequence_2">
+  <Sequence sap2010:Annotation.AnnotationText="Extract the information from an incoming .xlsx file containing a predefined template, filled in by the sender&#xA;&#xA;Assumptions:&#xA;The file is accessible and the format is the expected one&#xA;&#xA;Arguments: &#xA;in_strFilePath (In): String containing the file path&#xA;out_dictData (out): IDictionary &lt;String, String&gt; containing the extacted data from the file&#xA;in_sstrPassword (In): Secure String containing the file password&#xA;&#xA;Throws:&#xA;ArgumentException(InvalidFileFormat): if the excel file is in an unrecognized format&#xA;ArgumentException(FileNotFound): if the file is not in the expected location&#xA;ArgumentException(InvalidPassword): if the supplied password is not correct&#xA;&#xA;Outcome:&#xA;Success: the data is " DisplayName="extract" sap:VirtualizedContainerService.HintSize="554.666666666667,2785.33333333333" sap2010:WorkflowViewState.IdRef="Sequence_2">
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
         <x:Boolean x:Key="IsAnnotationDocked">True</x:Boolean>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
-    <p:BuildDictionary x:TypeArguments="x:String, x:String" DisplayName="Build dictionary" sap:VirtualizedContainerService.HintSize="512,22" sap2010:WorkflowViewState.IdRef="BuildDictionary`2_1" Result="[out_dictData]" />
-    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="512,2334.66666666667" sap2010:WorkflowViewState.IdRef="TryCatch_1">
+    <p:BuildDictionary x:TypeArguments="x:String, x:String" DisplayName="Build dictionary" sap:VirtualizedContainerService.HintSize="512.666666666667,22" sap2010:WorkflowViewState.IdRef="BuildDictionary`2_1" Result="[out_dictData]" />
+    <TryCatch DisplayName="Try Catch" sap:VirtualizedContainerService.HintSize="512.666666666667,2332" sap2010:WorkflowViewState.IdRef="TryCatch_1">
       <TryCatch.Try>
-        <ui:ExcelApplicationScope CreateNewFile="False" DisplayName="Excel Application Scope" sap:VirtualizedContainerService.HintSize="473.333333333333,2072" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" Password="[new System.Net.NetworkCredential(String.Empty, in_sstrPassword).Password]" Visible="False" WorkbookPath="[in_strFilePath]">
+        <ui:ExcelApplicationScope CreateNewFile="False" DisplayName="Excel Application Scope" sap:VirtualizedContainerService.HintSize="474,2072" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" Password="[new System.Net.NetworkCredential(String.Empty, in_sstrPassword).Password]" Visible="False" WorkbookPath="[in_strFilePath]">
           <ui:ExcelApplicationScope.Body>
             <ActivityAction x:TypeArguments="ui:WorkbookApplication">
               <ActivityAction.Argument>
                 <DelegateInArgument x:TypeArguments="ui:WorkbookApplication" Name="ExcelWorkbookScope" />
               </ActivityAction.Argument>
-              <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="439.333333333333,1963.33333333333" sap2010:WorkflowViewState.IdRef="Sequence_1">
+              <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="440,1963.33333333333" sap2010:WorkflowViewState.IdRef="Sequence_1">
                 <Sequence.Variables>
                   <Variable x:TypeArguments="ui:GenericValue" Name="str_tmp" />
                 </Sequence.Variables>
@@ -88,31 +88,31 @@
                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
-                <ui:ExcelReadCell Cell="C4" DisplayName="Read Cell" sap:VirtualizedContainerService.HintSize="397.333333333333,58.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadCell_1" SheetName="Sheet1">
+                <ui:ExcelReadCell Cell="C4" DisplayName="Read Cell" sap:VirtualizedContainerService.HintSize="398,58.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadCell_1" SheetName="Sheet1">
                   <ui:ExcelReadCell.Result>
                     <OutArgument x:TypeArguments="ui:GenericValue">[str_tmp]</OutArgument>
                   </ui:ExcelReadCell.Result>
                 </ui:ExcelReadCell>
-                <maes:AddToDictionary x:TypeArguments="x:String, x:String" Dictionary="[out_dictData]" DisplayName="Add to dictionary" sap:VirtualizedContainerService.HintSize="397.333333333333,134" sap2010:WorkflowViewState.IdRef="AddToDictionary`2_1" Key="firstName" Value="[str_tmp]" />
-                <ui:ExcelReadCell Cell="C5" DisplayName="Read Cell" sap:VirtualizedContainerService.HintSize="397.333333333333,58.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadCell_2" SheetName="Sheet1">
+                <maes:AddToDictionary x:TypeArguments="x:String, x:String" Dictionary="[out_dictData]" DisplayName="Add to dictionary" sap:VirtualizedContainerService.HintSize="398,134" sap2010:WorkflowViewState.IdRef="AddToDictionary`2_1" Key="firstName" Value="[str_tmp]" />
+                <ui:ExcelReadCell Cell="C5" DisplayName="Read Cell" sap:VirtualizedContainerService.HintSize="398,58.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadCell_2" SheetName="Sheet1">
                   <ui:ExcelReadCell.Result>
                     <OutArgument x:TypeArguments="ui:GenericValue">[str_tmp]</OutArgument>
                   </ui:ExcelReadCell.Result>
                 </ui:ExcelReadCell>
-                <maes:AddToDictionary x:TypeArguments="x:String, x:String" Dictionary="[out_dictData]" DisplayName="Add to dictionary" sap:VirtualizedContainerService.HintSize="397.333333333333,134" sap2010:WorkflowViewState.IdRef="AddToDictionary`2_2" Key="lastName" Value="[str_tmp]" />
-                <ui:ExcelReadCell Cell="C7" DisplayName="Read Cell" sap:VirtualizedContainerService.HintSize="397.333333333333,58.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadCell_3" SheetName="Sheet1">
+                <maes:AddToDictionary x:TypeArguments="x:String, x:String" Dictionary="[out_dictData]" DisplayName="Add to dictionary" sap:VirtualizedContainerService.HintSize="398,134" sap2010:WorkflowViewState.IdRef="AddToDictionary`2_2" Key="lastName" Value="[str_tmp]" />
+                <ui:ExcelReadCell Cell="C7" DisplayName="Read Cell" sap:VirtualizedContainerService.HintSize="398,58.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadCell_3" SheetName="Sheet1">
                   <ui:ExcelReadCell.Result>
                     <OutArgument x:TypeArguments="ui:GenericValue">[str_tmp]</OutArgument>
                   </ui:ExcelReadCell.Result>
                 </ui:ExcelReadCell>
-                <maes:AddToDictionary x:TypeArguments="x:String, x:String" Dictionary="[out_dictData]" DisplayName="Add to dictionary" sap:VirtualizedContainerService.HintSize="397.333333333333,134" sap2010:WorkflowViewState.IdRef="AddToDictionary`2_3" Key="custId" Value="[str_tmp]" />
-                <ui:ExcelReadCell Cell="F4" DisplayName="Read Cell" sap:VirtualizedContainerService.HintSize="397.333333333333,58.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadCell_4" SheetName="Sheet1">
+                <maes:AddToDictionary x:TypeArguments="x:String, x:String" Dictionary="[out_dictData]" DisplayName="Add to dictionary" sap:VirtualizedContainerService.HintSize="398,134" sap2010:WorkflowViewState.IdRef="AddToDictionary`2_3" Key="custId" Value="[str_tmp]" />
+                <ui:ExcelReadCell Cell="F4" DisplayName="Read Cell" sap:VirtualizedContainerService.HintSize="398,58.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadCell_4" SheetName="Sheet1">
                   <ui:ExcelReadCell.Result>
                     <OutArgument x:TypeArguments="ui:GenericValue">[str_tmp]</OutArgument>
                   </ui:ExcelReadCell.Result>
                 </ui:ExcelReadCell>
-                <maes:AddToDictionary x:TypeArguments="x:String, x:String" Dictionary="[out_dictData]" DisplayName="Add to dictionary" sap:VirtualizedContainerService.HintSize="397.333333333333,134" sap2010:WorkflowViewState.IdRef="AddToDictionary`2_4" Key="dob" Value="[str_tmp]" />
-                <ui:ExcelReadCell Cell="F5" DisplayName="Read Cell" sap:VirtualizedContainerService.HintSize="397.333333333333,58.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadCell_5" SheetName="Sheet1">
+                <maes:AddToDictionary x:TypeArguments="x:String, x:String" Dictionary="[out_dictData]" DisplayName="Add to dictionary" sap:VirtualizedContainerService.HintSize="398,134" sap2010:WorkflowViewState.IdRef="AddToDictionary`2_4" Key="dob" Value="[str_tmp]" />
+                <ui:ExcelReadCell Cell="F5" DisplayName="Read Cell" sap:VirtualizedContainerService.HintSize="398,58.6666666666667" sap2010:WorkflowViewState.IdRef="ExcelReadCell_5" SheetName="Sheet1">
                   <ui:ExcelReadCell.Result>
                     <OutArgument x:TypeArguments="ui:GenericValue">[str_tmp]</OutArgument>
                   </ui:ExcelReadCell.Result>
