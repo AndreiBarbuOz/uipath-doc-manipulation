@@ -54,16 +54,16 @@ stages:
         image: $(containerRegistry).azurecr.io/$(repositoryName):latest
         endpoint: demovmcontainer
       steps:
-        - bash: pwd
-        - bash: ls -a
-        - bash: ls $(Build.SourcesDirectory)
-        - bash: ls $(Build.ArtifactStagingDirectory)
+        - powershell: pwd
+        - powershell: ls -a
+        - powershell: ls $(Build.SourcesDirectory)
+        - powershell: ls $(Build.ArtifactStagingDirectory)
         - download: current
           artifact: drop
-        - bash: pwd
-        - bash: ls -a
-        - bash: ls $(Build.SourcesDirectory)
-        - bash: ls $(Build.ArtifactStagingDirectory)
+        - powershell: pwd
+        - powershell: ls -a
+        - powershell: ls $(Build.SourcesDirectory)
+        - powershell: ls $(Build.ArtifactStagingDirectory)
 #      - powershell: |
 #          Import-Module UiPath.PowerShell
 #          $token = Get-UiPathAuthToken -URL $(orchUrl) -Username $(uatUsername) -Password $(uatPassword) -TenantName $(uatTenantName)
