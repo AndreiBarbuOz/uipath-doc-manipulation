@@ -43,7 +43,7 @@ stages:
         artifact: drop
         displayName: Publish build artifacts
   - stage: DeployUAT
-    dependsOn: DeployUAT
+    dependsOn: Build
     condition: succeeded()
     displayName: Verify change sets, Deploy to UAT
     jobs:
