@@ -55,13 +55,13 @@ stages:
         endpoint: demovmcontainer
       steps:
         - powershell: pwd
-        - powershell: ls -a
+        - powershell: ls
         - powershell: ls $(Build.SourcesDirectory)
         - powershell: ls $(Build.ArtifactStagingDirectory)
         - download: current
           artifact: drop
         - powershell: pwd
-        - powershell: ls -a
+        - powershell: ls
         - powershell: ls $(Build.SourcesDirectory)
         - powershell: ls $(Build.ArtifactStagingDirectory)
 #      - powershell: |
