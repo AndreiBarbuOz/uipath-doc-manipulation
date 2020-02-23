@@ -64,6 +64,8 @@ stages:
         - powershell: ls
         - powershell: ls $(Build.SourcesDirectory)
         - powershell: ls $(Build.ArtifactStagingDirectory)
+        - powershell: ls $(Pipeline.Workspace)
+        - powershell: ls $(Pipeline.Workspace)/drop
 #      - powershell: |
 #          Import-Module UiPath.PowerShell
 #          $token = Get-UiPathAuthToken -URL $(orchUrl) -Username $(uatUsername) -Password $(uatPassword) -TenantName $(uatTenantName)
