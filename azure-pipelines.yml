@@ -32,54 +32,102 @@ stages:
           . C:\scripts\cicd-lib.ps1
 
           $configContent = Get-Content -Path $(Build.SourcesDirectory)\config\config.json | ConvertFrom-Json
-          $desiredAssetState = $configContent.assets
           
-          Get-AssetChanges -DesiredAssetState $desiredAssetState -Token $token | ConvertTo-Json | Out-File -FilePath $(Build.ArtifactStagingDirectory)\change-set.json
+          $assetChangeSet = Get-AssetChanges -DesiredAssetState $configContent.assets -Token $token 
+          $changeSet = @{"assets"=$assetChangeSet}
+
+          $changeSet | ConvertTo-Json -Depth 5 | Out-File -FilePath $(Build.ArtifactStagingDirectory)\change-set.json
         displayName: Create the change set
         name: buildChangeSet
       - publish: $(Build.ArtifactStagingDirectory)
         artifact: drop
         displayName: Publish build artifacts
   - stage: DeployUAT
-    dependsOn: Build
+    dependsOn: DeployUAT
     condition: succeeded()
     displayName: Verify change sets, Deploy to UAT
     jobs:
-    - deployment: deployUat
+    - deployment: deployUAT
       pool:
         vmImage: 'windows-latest'
       container:
         image: $(containerRegistry).azurecr.io/$(repositoryName):latest
         endpoint: demovmcontainer
-      environment: 'uat'
+      environment: 'prod'
       strategy:
         runOnce:
           deploy:
             steps:
-              - powershell: pwd
-              - powershell: ls
-              - powershell: ls $(Build.SourcesDirectory)
-              - powershell: ls $(Build.ArtifactStagingDirectory)
               - download: current
                 artifact: drop
                 displayName: Download build artifacts
-              - powershell: pwd
-              - powershell: ls
-              - powershell: ls $(Build.SourcesDirectory)
-              - powershell: ls $(Build.ArtifactStagingDirectory)
-              - powershell: ls $(Pipeline.Workspace)
-              - powershell: ls $(Pipeline.Workspace)/drop
-#      - powershell: |
-#          Import-Module UiPath.PowerShell
-#          $token = Get-UiPathAuthToken -URL $(orchUrl) -Username $(uatUsername) -Password $(uatPassword) -TenantName $(uatTenantName)
+              - powershell: |
+                  Import-Module UiPath.PowerShell
+                  $token = Get-UiPathAuthToken -URL $(orchUrl) -Username $(uatUsername) -Password $(uatPassword) -TenantName $(uatTenantName)
+                  Get-ChildItem -Path $(Pipeline.Workspace)\drop -Filter *.nupkg | ForEach-Object {Add-UiPathPackage -PackageFile $_.FullName}
+                displayName: Upload package to UAT 
+                name: deployUatPackage
+              - powershell: |
+                  Import-Module UiPath.PowerShell
+                  $token = Get-UiPathAuthToken -URL $(orchUrl) -Username $(uatUsername) -Password $(uatPassword) -TenantName $(uatTenantName)
+        
+                  $temp = "C:\scripts"
+                  $link = "https://raw.githubusercontent.com/AndreiBarbuOz/uipath-config/master/cicd-lib.ps1"
+                  $file = "cicd-lib.ps1"
+                  New-Item $temp -ItemType directory
+                  Set-Location -Path $temp
+                  Set-ExecutionPolicy Unrestricted -force
+                  Invoke-WebRequest -Uri $link -OutFile $file
+                  . C:\scripts\cicd-lib.ps1
+
+                  $changeSetContent = Get-Content -Path $(Pipeline.Workspace)\drop\change-set.json | ConvertFrom-Json
+                  $changeSetContent
+
+                  Set-AssetChanges -Token $token -DesiredAssetState $changeSetContent.assets
+                displayName: Apply change set to UAT
+                name: deployUatChangeSet
+#  - stage: DeployProd
+#    dependsOn: DeployUAT
+#    condition: succeeded()
+#    displayName: Verify change sets, Deploy to Prod
+#    jobs:
+#    - deployment: deployProd
+#      pool:
+#        vmImage: 'windows-latest'
+#      container:
+#        image: $(containerRegistry).azurecr.io/$(repositoryName):latest
+#        endpoint: demovmcontainer
+#      environment: 'uat'
+#      strategy:
+#        runOnce:
+#          deploy:
+#            steps:
+#              - download: current
+#                artifact: drop
+#                displayName: Download build artifacts
+#              - powershell: |
+#                  Import-Module UiPath.PowerShell
+#                  $token = Get-UiPathAuthToken -URL $(orchUrl) -Username $(prodUsername) -Password $(prodPassword) -TenantName $(prodTenantName)
+#                  Get-ChildItem -Path $(Pipeline.Workspace)\drop -Filter *.nupkg | ForEach-Object {Add-UiPathPackage -PackageFile $_.FullName}
+#                displayName: Upload package to Prod 
+#                name: deployProdPackage
+#              - powershell: |
+#                  Import-Module UiPath.PowerShell
+#                  $token = Get-UiPathAuthToken -URL $(orchUrl) -Username $(prodUsername) -Password $(prodPassword) -TenantName $(prodTenantName)
+#        
+#                  $temp = "C:\scripts"
+#                  $link = "https://raw.githubusercontent.com/AndreiBarbuOz/uipath-config/master/cicd-lib.ps1"
+#                  $file = "cicd-lib.ps1"
+#                  New-Item $temp -ItemType directory
+#                  Set-Location -Path $temp
+#                  Set-ExecutionPolicy Unrestricted -force
+#                  Invoke-WebRequest -Uri $link -OutFile $file
+#                  . C:\scripts\cicd-lib.ps1
 #
-#          Get-ChildItem -Path $(Build.ArtifactStagingDirectory) -Filter *.nupkg | ForEach-Object {Add-UiPathPackage -PackageFile $_.FullName}
-#          $package = Get-UiPathPackage -id $project.name 
+#                  $changeSetContent = Get-Content -Path $(Pipeline.Workspace)\drop\change-set.json | ConvertFrom-Json
+#                  $changeSetContent
 #
-#          Get-UiPathRobot | Format-Table
-#          Get-UiPathProcess | Format-Table
-#          Get-UiPathPackage | Format-Table
-#          Get-UiPathPackageVersion -Package $package | Format-Table
-#        displayName: Artifact build
-#        name: buildArtifact
-  
+#                  Set-AssetChanges -Token $token -DesiredAssetState $changeSetContent.assets
+#                displayName: Apply change set to Prod
+#                name: deployProdChangeSet
+#
