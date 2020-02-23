@@ -4,23 +4,64 @@ variables:
 trigger:
 - master
 
-jobs:
-  - job: build_and_upload
-    pool:
-      vmImage: 'windows-latest'
-    container:
-      image: $(containerRegistry).azurecr.io/$(repositoryName):latest
-      endpoint: demovmcontainer
-    steps:
-    - script: c:\UiPath\Robot\UiRobot.exe -pack $(Build.SourcesDirectory)\project.json -o $(Build.ArtifactStagingDirectory)\
-    - powershell: |
-        Import-Module UiPath.PowerShell
-        Get-UiPathAuthToken -URL $(orchUrl) -Username $(username) -Password $(password) -TenantName $(tenantName) -Session
-        Get-ChildItem -Path $(Build.ArtifactStagingDirectory) -Filter *.nupkg | ForEach-Object {Add-UiPathPackage -PackageFile $_.FullName}
-        $package = Get-UiPathPackage -id $project.name 
+stages:
+  - stage: Build
+    displayName: Build artifacts and create change sets
+    jobs:
+    - job: build
+      pool:
+        vmImage: 'windows-latest'
+      container:
+        image: $(containerRegistry).azurecr.io/$(repositoryName):latest
+        endpoint: demovmcontainer
+      steps:
+      - script: c:\UiPath\Robot\UiRobot.exe -pack $(Build.SourcesDirectory)\project.json -o $(Build.ArtifactStagingDirectory)\
+        displayName: Build artifact
+        name: buildArtifact
+      - powershell: |
+          Import-Module UiPath.PowerShell
+          $token = Get-UiPathAuthToken -URL $(orchUrl) -Username $(uatUsername) -Password $(uatPassword) -TenantName $(uatTenantName)
 
-        Get-UiPathRobot | Format-Table
-        Get-UiPathProcess | Format-Table
-        Get-UiPathPackage | Format-Table
-        Get-UiPathPackageVersion -Package $package | Format-Table
-      displayName: 'Build package'
+          $temp = "C:\scripts"
+          $link = "https://raw.githubusercontent.com/AndreiBarbuOz/uipath-config/master/cicd-lib.ps1"
+          $file = "cicd-lib.ps1"
+          New-Item $temp -ItemType directory
+          Set-Location -Path $temp
+          Set-ExecutionPolicy Unrestricted -force
+          Invoke-WebRequest -Uri $link -OutFile $file
+          & "C:\scripts\cicd-lib.ps1"
+
+          $configContent = Get-Content -Path $(Build.SourcesDirectory)\config\config.json | ConvertFrom-Json
+          $configContent
+          $desiredAssetState = $configContent.assets
+          $desiredAssetState | ConvertTo-Json | write-host
+          
+          $change = Get-AssetChanges -DesiredAssetState $desiredAssetState -Token $token
+          $change #| ConvertTo-Json | Write-Host
+          $change | ConvertTo-Json | Write-Host
+        displayName: Create the change set
+        name: buildChangeSet
+#  - stage: Test
+#    displayName: Build artifacts and create change sets
+#    jobs:
+#    - job: test
+#      pool:
+#        vmImage: 'windows-latest'
+#      container:
+#        image: $(containerRegistry).azurecr.io/$(repositoryName):latest
+#        endpoint: demovmcontainer
+#      steps:
+#      - powershell: |
+#          Import-Module UiPath.PowerShell
+#          $token = Get-UiPathAuthToken -URL $(orchUrl) -Username $(uatUsername) -Password $(uatPassword) -TenantName $(uatTenantName)
+#
+#          Get-ChildItem -Path $(Build.ArtifactStagingDirectory) -Filter *.nupkg | ForEach-Object {Add-UiPathPackage -PackageFile $_.FullName}
+#          $package = Get-UiPathPackage -id $project.name 
+#
+#          Get-UiPathRobot | Format-Table
+#          Get-UiPathProcess | Format-Table
+#          Get-UiPathPackage | Format-Table
+#          Get-UiPathPackageVersion -Package $package | Format-Table
+#        displayName: Artifact build
+#        name: buildArtifact
+  
