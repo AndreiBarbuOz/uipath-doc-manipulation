@@ -39,18 +39,31 @@ stages:
           $change = Get-AssetChanges -DesiredAssetState $desiredAssetState -Token $token
           $change 
           $change | ConvertTo-Json | Write-Host
+          $change | ConvertTo-Json | Out-File -FilePath $(Build.ArtifactStagingDirectory)\change-set.json
         displayName: Create the change set
         name: buildChangeSet
-#  - stage: Test
-#    displayName: Build artifacts and create change sets
-#    jobs:
-#    - job: test
-#      pool:
-#        vmImage: 'windows-latest'
-#      container:
-#        image: $(containerRegistry).azurecr.io/$(repositoryName):latest
-#        endpoint: demovmcontainer
-#      steps:
+      - publish: $(Build.ArtifactStagingDirectory)
+        artifact: drop
+  - stage: Test
+    displayName: Test artifact and verify change sets
+    jobs:
+    - job: test
+      pool:
+        vmImage: 'windows-latest'
+      container:
+        image: $(containerRegistry).azurecr.io/$(repositoryName):latest
+        endpoint: demovmcontainer
+      steps:
+        - bash: pwd
+        - bash: ls -a
+        - bash: ls $(Build.SourcesDirectory)
+        - bash: ls $(Build.ArtifactStagingDirectory)
+        - download: current
+          artifact: drop
+        - bash: pwd
+        - bash: ls -a
+        - bash: ls $(Build.SourcesDirectory)
+        - bash: ls $(Build.ArtifactStagingDirectory)
 #      - powershell: |
 #          Import-Module UiPath.PowerShell
 #          $token = Get-UiPathAuthToken -URL $(orchUrl) -Username $(uatUsername) -Password $(uatPassword) -TenantName $(uatTenantName)
