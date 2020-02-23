@@ -32,40 +32,43 @@ stages:
           . C:\scripts\cicd-lib.ps1
 
           $configContent = Get-Content -Path $(Build.SourcesDirectory)\config\config.json | ConvertFrom-Json
-          $configContent
           $desiredAssetState = $configContent.assets
-          $desiredAssetState | ConvertTo-Json | write-host
           
-          $change = Get-AssetChanges -DesiredAssetState $desiredAssetState -Token $token
-          $change 
-          $change | ConvertTo-Json | Write-Host
-          $change | ConvertTo-Json | Out-File -FilePath $(Build.ArtifactStagingDirectory)\change-set.json
+          Get-AssetChanges -DesiredAssetState $desiredAssetState -Token $token | ConvertTo-Json | | Out-File -FilePath $(Build.ArtifactStagingDirectory)\change-set.json
         displayName: Create the change set
         name: buildChangeSet
       - publish: $(Build.ArtifactStagingDirectory)
         artifact: drop
-  - stage: Test
-    displayName: Test artifact and verify change sets
+        displayName: Publish build artifacts
+  - stage: DeployUAT
+    dependsOn: Build
+    condition: succeeded()
+    displayName: Verify change sets, Deploy to UAT
     jobs:
-    - job: test
+    - deployment: deployUat
       pool:
         vmImage: 'windows-latest'
       container:
         image: $(containerRegistry).azurecr.io/$(repositoryName):latest
         endpoint: demovmcontainer
-      steps:
-        - powershell: pwd
-        - powershell: ls
-        - powershell: ls $(Build.SourcesDirectory)
-        - powershell: ls $(Build.ArtifactStagingDirectory)
-        - download: current
-          artifact: drop
-        - powershell: pwd
-        - powershell: ls
-        - powershell: ls $(Build.SourcesDirectory)
-        - powershell: ls $(Build.ArtifactStagingDirectory)
-        - powershell: ls $(Pipeline.Workspace)
-        - powershell: ls $(Pipeline.Workspace)/drop
+      environment: 'uat'
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+              - powershell: pwd
+              - powershell: ls
+              - powershell: ls $(Build.SourcesDirectory)
+              - powershell: ls $(Build.ArtifactStagingDirectory)
+              - download: current
+                artifact: drop
+                displayName: Download build artifacts
+              - powershell: pwd
+              - powershell: ls
+              - powershell: ls $(Build.SourcesDirectory)
+              - powershell: ls $(Build.ArtifactStagingDirectory)
+              - powershell: ls $(Pipeline.Workspace)
+              - powershell: ls $(Pipeline.Workspace)/drop
 #      - powershell: |
 #          Import-Module UiPath.PowerShell
 #          $token = Get-UiPathAuthToken -URL $(orchUrl) -Username $(uatUsername) -Password $(uatPassword) -TenantName $(uatTenantName)
