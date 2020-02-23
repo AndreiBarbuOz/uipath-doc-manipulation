@@ -1,0 +1,24 @@
+{
+  "assets": [
+    {
+      "Name": "ingress_outlook_folder",
+      "ValueType": "Text",
+      "Value": "Inbox\\tests\\doc-manipulation\\ingress"
+    },
+    {
+      "Name": "processed_outlook_folder",
+      "ValueType": "Text",
+      "Value": "Inbox\\tests\\doc-manipulation\\processed"
+    },
+    {
+      "Name": "to_process_folder",
+      "ValueType": "Text",
+      "Value": "tmp\\to-process"
+    }
+  ],
+  "queues": [
+    {
+      "Name": "doc-manipulation"
+    }
+  ]
+}
