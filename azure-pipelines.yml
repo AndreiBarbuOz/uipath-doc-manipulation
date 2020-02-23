@@ -29,7 +29,7 @@ stages:
           Set-Location -Path $temp
           Set-ExecutionPolicy Unrestricted -force
           Invoke-WebRequest -Uri $link -OutFile $file
-          & "C:\scripts\cicd-lib.ps1"
+          . C:\scripts\cicd-lib.ps1
 
           $configContent = Get-Content -Path $(Build.SourcesDirectory)\config\config.json | ConvertFrom-Json
           $configContent
@@ -37,7 +37,7 @@ stages:
           $desiredAssetState | ConvertTo-Json | write-host
           
           $change = Get-AssetChanges -DesiredAssetState $desiredAssetState -Token $token
-          $change #| ConvertTo-Json | Write-Host
+          $change 
           $change | ConvertTo-Json | Write-Host
         displayName: Create the change set
         name: buildChangeSet

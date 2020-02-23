@@ -1,5 +1,7 @@
 # Template document manipulation project
 
+[![Build Status](https://dev.azure.com/andreibarbu0946/UiPathGoodPractices/_apis/build/status/AndreiBarbuOz.uipath-doc-manipulation?branchName=master)](https://dev.azure.com/andreibarbu0946/UiPathGoodPractices/_build/latest?definitionId=12&branchName=master)
+
 ## Purpose
 
 This template provides a template of UiPath workflows, creating a framework for a common scenario. The purposes of the project are to:
