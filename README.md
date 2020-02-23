@@ -33,12 +33,7 @@ The project contains four distinct phases:
 
 ## Installation and configuration
 
-Clone the repository and update the config file to be used. Depending on the ingress and outgress being used, different keys need to be present:
-
-|Option|Ingress|Ougress|
-|---|---|---|
-|**Email**|outlook_account, ingress_outlook_folder, send_email_address|outlook_account, processed_outlook_folder, send_email_address|
-
+Clone the repository and update the config file to be used. Configuration file needs to be updated with required keys. Among them, the outlook folders config and local temporary paths. Sample input files can be found in the `tests\assets` folder.
 
 ## Implementation scenarios
 
@@ -67,11 +62,9 @@ Between stages 2 and 3, the data will flow using a Collection of `IDictionary <S
 The keys expected in the mapping are:
 * firstName
 * lastName
-* customerId
-* date
-* dob
 * address
-* accountNo
+* custId
+* account
 * bsb
 
 ### Stages 3 and 4
@@ -107,5 +100,5 @@ The document generated at the previous stage is attached to an email and sent. T
 
 ## Testing and development
 
-For most of the files in the `process\src` folder, an equivalent test file exists in the `process\tests` folder. The functionality of the workflow is embedded in the tests. _ie._ the successful execution of the tests define the correct behavior of the workflow.
+For most of the files in the `process\src` folder, an equivalent test file should exist in the `process\tests` folder. The functionality of the workflow is embedded in the tests. _ie._ the successful execution of the tests define the correct behavior of the workflow.
 
