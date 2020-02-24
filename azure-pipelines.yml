@@ -1,3 +1,4 @@
+name: $(Build.DefinitionName)_$(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
 variables:
 - group: uipath-cicd
 
@@ -13,7 +14,7 @@ stages:
         vmImage: 'windows-latest'
       container:
         image: $(containerRegistry).azurecr.io/$(repositoryName):latest
-        endpoint: $[variablegroups.uipath-cicd.containerRegistry]
+        endpoint: demovmcontainer
       steps:
       - script: c:\UiPath\Robot\UiRobot.exe -pack $(Build.SourcesDirectory)\project.json -o $(Build.ArtifactStagingDirectory)\
         displayName: Build artifact
