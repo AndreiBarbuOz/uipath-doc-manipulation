@@ -13,7 +13,7 @@ stages:
         vmImage: 'windows-latest'
       container:
         image: $(containerRegistry).azurecr.io/$(repositoryName):latest
-        endpoint: ${{variables.containerRegistry}}
+        endpoint: ${{uipath-cicd.containerRegistry}}
       steps:
       - script: c:\UiPath\Robot\UiRobot.exe -pack $(Build.SourcesDirectory)\project.json -o $(Build.ArtifactStagingDirectory)\
         displayName: Build artifact
