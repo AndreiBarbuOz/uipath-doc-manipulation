@@ -16,7 +16,7 @@ stages:
         image: $(containerRegistry).azurecr.io/$(repositoryName):latest
         endpoint: demovmcontainer
       steps:
-      - script: c:\UiPath\Robot\UiRobot.exe -pack $(Build.SourcesDirectory)\project.json -o $(Build.ArtifactStagingDirectory)\
+      - script: c:\UiPath\Robot\UiRobot.exe -pack $(Build.SourcesDirectory)\project.json -o $(Build.ArtifactStagingDirectory)\ -version 1.0.$(Build.BuildId)
         displayName: Build artifact
         name: buildArtifact
       - powershell: |
