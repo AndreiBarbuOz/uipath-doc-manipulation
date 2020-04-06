@@ -102,3 +102,6 @@ The document generated at the previous stage is attached to an email and sent. T
 
 For most of the files in the `process\src` folder, an equivalent test file should exist in the `process\tests` folder. The functionality of the workflow is embedded in the tests. _ie._ the successful execution of the tests define the correct behavior of the workflow.
 
+## CI/CD
+
+![CI/CD](https://www.lucidchart.com/publicSegments/view/96f2f529-1e97-4cb7-8793-1a70c0e82de3/image.png)
