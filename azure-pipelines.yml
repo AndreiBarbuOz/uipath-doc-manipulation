@@ -16,16 +16,14 @@ stages:
         image: $(containerRegistry).azurecr.io/$(repositoryName):latest
         endpoint: demovmcontainer
       steps:
-      - powershell: |
-          $cmd = 'c:\UiPath\Robot\UiRobot.exe'
-          $arg1 = 'pack'
-          $arg2 = '$(Build.SourcesDirectory)\project.json'
-          $arg3 = '--output'
-          $arg4 = '$(Build.ArtifactStagingDirectory)\'
-          $arg5 = '-v'
-          $arg6 = '1.0.$(Build.BuildId)'
-          & $cmd $arg1 $arg2 $arg3 $arg4 $arg5 $arg6
-        displayName: Build artifact
+      - task: AzureCLI@2
+        displayName: Build and Push the Docker image
+        inputs:
+          azureSubscription: $(azureSubscription)
+          scriptType: ps
+          scriptLocation: inlineScript
+          inlineScript: | 
+            c:\UiPath\Robot\UiRobot.exe -pack $(Build.SourcesDirectory)\project.json -o $(Build.ArtifactStagingDirectory)\ -v 1.0.$(Build.BuildId)
         name: buildArtifact
         
       - powershell: |
