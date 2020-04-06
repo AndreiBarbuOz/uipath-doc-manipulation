@@ -17,9 +17,17 @@ stages:
         endpoint: demovmcontainer
       steps:
       - powershell: |
-          & 'c:\UiPath\Robot\UiRobot.exe' 'pack' '$(Build.SourcesDirectory)\project.json' '--output $(Build.ArtifactStagingDirectory)\ -v 1.0.$(Build.BuildId)'
+          $cmd = 'c:\UiPath\Robot\UiRobot.exe'
+          $arg1 = 'pack'
+          $arg2 = '$(Build.SourcesDirectory)\project.json'
+          $arg3 = '--output'
+          $arg4 = '$(Build.ArtifactStagingDirectory)\'
+          $arg5 = '-v'
+          $arg6 = '1.0.$(Build.BuildId)'
+          & $cmd $arg1 $arg2 $arg3 $arg4 $arg5 $arg6
         displayName: Build artifact
         name: buildArtifact
+        
       - powershell: |
           Import-Module UiPath.PowerShell
           $token = Get-UiPathAuthToken -URL $(orchUrl) -Username $(uatUsername) -Password $(uatPassword) -TenantName $(uatTenantName)
