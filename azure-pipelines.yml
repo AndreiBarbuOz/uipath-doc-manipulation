@@ -1,7 +1,8 @@
 name: $(Build.DefinitionName)_$(SourceBranchName)_$(Date:yyyyMMdd)$(Rev:.r)
 variables:
 - group: uipath-cicd
-
+- name: agent.preferPowerShellOnContainers
+  value: true
 trigger:
 - master
 
@@ -16,16 +17,9 @@ stages:
         image: $(containerRegistry).azurecr.io/$(repositoryName):latest
         endpoint: demovmcontainer
       steps:
-      - task: AzureCLI@2
-        displayName: Build and Push the Docker image
-        inputs:
-          azureSubscription: $(azureSubscription)
-          scriptType: ps
-          scriptLocation: inlineScript
-          inlineScript: | 
-            c:\UiPath\Robot\UiRobot.exe -pack $(Build.SourcesDirectory)\project.json -o $(Build.ArtifactStagingDirectory)\ -v 1.0.$(Build.BuildId)
+      - script: c:\UiPath\Robot\UiRobot.exe -pack $(Build.SourcesDirectory)\project.json -o $(Build.ArtifactStagingDirectory)\ -v 1.0.$(Build.BuildId)
+        displayName: Build artifact
         name: buildArtifact
-        
       - powershell: |
           Import-Module UiPath.PowerShell
           $token = Get-UiPathAuthToken -URL $(orchUrl) -Username $(uatUsername) -Password $(uatPassword) -TenantName $(uatTenantName)
