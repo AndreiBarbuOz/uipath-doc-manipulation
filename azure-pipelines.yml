@@ -17,7 +17,7 @@ stages:
         endpoint: demovmcontainer
       steps:
       - powershell: |
-          & 'c:\UiPath\Robot\UiRobot.exe' 'pack' '$(Build.SourcesDirectory)\project.json -o $(Build.ArtifactStagingDirectory)\ -v 1.0.$(Build.BuildId)'
+          & 'c:\UiPath\Robot\UiRobot.exe' 'pack' '$(Build.SourcesDirectory)\project.json' '--output' '$(Build.ArtifactStagingDirectory)\ -v 1.0.$(Build.BuildId)'
         displayName: Build artifact
         name: buildArtifact
       - powershell: |
