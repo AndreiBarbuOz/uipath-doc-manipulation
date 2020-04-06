@@ -16,11 +16,10 @@ stages:
         image: $(containerRegistry).azurecr.io/$(repositoryName):latest
         endpoint: demovmcontainer
       steps:
-      - task: CmdLine@2
-        inputs:
-          script: c:\UiPath\Robot\UiRobot.exe -pack $(Build.SourcesDirectory)\project.json -o $(Build.ArtifactStagingDirectory)\ -v 1.0.$(Build.BuildId)
-#          displayName: Build artifact
-#          name: buildArtifact
+      - powershell: |
+          & 'c:\UiPath\Robot\UiRobot.exe' 'pack $(Build.SourcesDirectory)\project.json -o $(Build.ArtifactStagingDirectory)\ -v 1.0.$(Build.BuildId)'
+        displayName: Build artifact
+        name: buildArtifact
       - powershell: |
           Import-Module UiPath.PowerShell
           $token = Get-UiPathAuthToken -URL $(orchUrl) -Username $(uatUsername) -Password $(uatPassword) -TenantName $(uatTenantName)
